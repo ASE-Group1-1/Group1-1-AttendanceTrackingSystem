@@ -14,6 +14,16 @@
       <url-pattern>/sign</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>create-groups</servlet-name>
+        <servlet-class>de.ase11.attendanceTrackingSystem.GroupCreationServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>create-groups</servlet-name>
+        <url-pattern>/create-groups</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>landingpage.jsp</welcome-file>
     </welcome-file-list>
