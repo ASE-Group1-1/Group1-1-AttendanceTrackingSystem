@@ -4,7 +4,11 @@ import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 import com.googlecode.objectify.annotation.Index;
 
+import com.google.appengine.api.users.User;
+
 import java.lang.String;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 public class Group {
@@ -14,6 +18,7 @@ public class Group {
 	private String meeting_location;
 	private String meeting_time;
 	private String instructor_name;
+    private List<User> members = new ArrayList<User>();
 
 	public Group() {
 	}
@@ -33,7 +38,22 @@ public class Group {
 		this.instructor_name = instructor_name;
 	}
 	
-	
+	public boolean joinGroup (User user) {
+	    boolean valid_join = true;
+	    valid_join = !(this.hasMember(user));
+
+	    if (valid_join) {
+	        this.members.add(user);
+	        return true;
+        } else {
+	        return false;
+        }
+    }
+
+    public boolean hasMember (User user) {
+        if (this.members.contains(user)) return true;
+        else return false;
+    }
 	
 	/**
 	 * @return the id
@@ -50,7 +70,7 @@ public class Group {
 	/**
 	 * @param group_number the group_number to set
 	 */
-	public void setGroup_number(int group_number) {
+	private void setGroup_number(int group_number) {
 		this.group_number = group_number;
 	}
 	/**
@@ -62,7 +82,7 @@ public class Group {
 	/**
 	 * @param meeting_location the meeting_location to set
 	 */
-	public void setMeeting_location(String meeting_location) {
+	private void setMeeting_location(String meeting_location) {
 		this.meeting_location = meeting_location;
 	}
 	/**
@@ -74,7 +94,7 @@ public class Group {
 	/**
 	 * @param meeting_time the meeting_time to set
 	 */
-	public void setMeeting_time(String meeting_time) {
+	private void setMeeting_time(String meeting_time) {
 		this.meeting_time = meeting_time;
 	}
 	/**
@@ -86,7 +106,15 @@ public class Group {
 	/**
 	 * @param instructor_name the instructor_name to set
 	 */
-	public void setInstructor_name(String instructor_name) {
+	private void setInstructor_name(String instructor_name) {
 		this.instructor_name = instructor_name;
 	}
+    /**
+     * @return the members
+     */
+    public List<User> getMembers() { return members; }
+    /**
+     * @param members the members to set
+     */
+    private void setMembers(List<User> members) { this.members = members; }
 }
