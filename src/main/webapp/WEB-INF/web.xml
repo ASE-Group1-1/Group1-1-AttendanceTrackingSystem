@@ -24,6 +24,16 @@
         <url-pattern>/create-groups</url-pattern>
     </servlet-mapping>
 
+    <servlet>
+        <servlet-name>join-group</servlet-name>
+        <servlet-class>de.ase11.attendanceTrackingSystem.JoinGroupServlet</servlet-class>
+    </servlet>
+
+    <servlet-mapping>
+        <servlet-name>join-group</servlet-name>
+        <url-pattern>/join-group</url-pattern>
+    </servlet-mapping>
+
     <welcome-file-list>
         <welcome-file>landingpage.jsp</welcome-file>
     </welcome-file-list>
