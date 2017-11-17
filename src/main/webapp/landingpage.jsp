@@ -20,7 +20,7 @@
 
 <body>
 
-    <h1>Hello World!</h1>
+    <h1>Welcome to the Attendance Tracking System!</h1>
 
 <%
     UserService userService = UserServiceFactory.getUserService();
@@ -49,7 +49,7 @@
     if (user != null) {
         List<Group> groups = ObjectifyService.ofy()
             .load()
-            .type(Group.class) // We want only Greetings
+            .type(Group.class)
             .order("group_number")
             .list();
 
@@ -62,22 +62,44 @@
         </form>
 <%
         } else {
-%>
-            <p>Join one of the following groups.</p>
-<%
-            // List all groups
+            // Check if the current user is already member in a group
+            Group current_users_group = null;
             for (Group group : groups) {
-                pageContext.setAttribute("group_number", group.getGroup_number());
-                pageContext.setAttribute("instructor_name", group.getInstructor_name());
+                if(group.hasMember(user)) {
+                    current_users_group = group;
+                }
+            }
+
+            if(current_users_group == null) {
 %>
-            <p>
-                <b>Group ${fn:escapeXml(group_number)}</b>
-                Instructor: ${fn:escapeXml(instructor_name)}
-            </p>
+                <p>Join one of the following groups.</p>
 <%
+                // List all groups
+                for (Group group : groups) {
+                    pageContext.setAttribute("group_id", group.getId());
+                    pageContext.setAttribute("group_number", group.getGroup_number());
+                    pageContext.setAttribute("instructor_name", group.getInstructor_name());
+%>
+                <p>
+                    <b>Group ${fn:escapeXml(group_number)}</b>
+                    Instructor: ${fn:escapeXml(instructor_name)} Group-Id: ${fn:escapeXml(group_id)}
+                    <form action="/join-group" method="post">
+                        <div><input type="submit" value="Join this group"/></div>
+                        <input type="hidden" name="joinGroupId" value="${fn:escapeXml(group_id)}"/>
+                    </form>
+                </p>
+<%
+                }
+            } else {
+                pageContext.setAttribute("group_number", current_users_group.getGroup_number());
+                pageContext.setAttribute("instructor_name", current_users_group.getInstructor_name());
+%>
+                <p>You are member in group ${fn:escapeXml(group_number)}</p>
+                <p>Instructor: ${fn:escapeXml(instructor_name)}</p>
+<%
+            }
         }
     }
-}
 %>
 
 
