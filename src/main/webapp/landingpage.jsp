@@ -82,7 +82,7 @@
 %>
                 <p>
                     <b>Group ${fn:escapeXml(group_number)}</b>
-                    Instructor: ${fn:escapeXml(instructor_name)} Group-Id: ${fn:escapeXml(group_id)}
+                    Instructor: ${fn:escapeXml(instructor_name)}
                     <form action="/join-group" method="post">
                         <div><input type="submit" value="Join this group"/></div>
                         <input type="hidden" name="joinGroupId" value="${fn:escapeXml(group_id)}"/>
@@ -93,9 +93,13 @@
             } else {
                 pageContext.setAttribute("group_number", current_users_group.getGroup_number());
                 pageContext.setAttribute("instructor_name", current_users_group.getInstructor_name());
+                pageContext.setAttribute("meeting_time", current_users_group.getMeeting_time());
+                pageContext.setAttribute("meeting_location", current_users_group.getMeeting_location());
 %>
                 <p>You are member in group ${fn:escapeXml(group_number)}</p>
                 <p>Instructor: ${fn:escapeXml(instructor_name)}</p>
+                <p>Time: ${fn:escapeXml(meeting_time)}</p>
+                <p>Location: ${fn:escapeXml(meeting_location)}</p>
 <%
             }
         }
