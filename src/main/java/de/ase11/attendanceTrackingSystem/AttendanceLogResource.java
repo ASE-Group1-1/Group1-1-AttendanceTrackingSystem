@@ -9,19 +9,18 @@ import javax.xml.bind.Marshaller;
 import java.io.IOException;
 import java.io.OutputStream;
 
-public class AttendanceResource  extends ServerResource {
+public class AttendanceLogResource extends ServerResource {
 
     @Get
     public String represent() throws JAXBException, IOException {
 
-        Attendance attendance = new Attendance();
-        attendance.setPresented(true);
+        AttendanceLog attendanceLog = AttendanceLog.createAttendanceLog();
 
-        return this.attendanceToXml(attendance);
+        return this.attendanceLogToXml(attendanceLog);
 
     }
 
-    private String attendanceToXml(Attendance attendance) throws JAXBException, IOException {
+    private String attendanceLogToXml(AttendanceLog attendanceLog) throws JAXBException, IOException {
         OutputStream output = new OutputStream()
         {
             private StringBuilder string = new StringBuilder();
@@ -36,12 +35,12 @@ public class AttendanceResource  extends ServerResource {
         };
 
         // create JAXB context and instantiate marshaller
-        JAXBContext context = JAXBContext.newInstance(Attendance.class);
+        JAXBContext context = JAXBContext.newInstance(AttendanceLog.class);
         Marshaller m = context.createMarshaller();
         m.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
         // Write to output stream
-        m.marshal(attendance, (OutputStream) output);
+        m.marshal(attendanceLog, (OutputStream) output);
         String str = output.toString();
 
         return str;
