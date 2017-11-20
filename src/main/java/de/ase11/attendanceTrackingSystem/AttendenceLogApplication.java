@@ -4,10 +4,12 @@ import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
 import org.restlet.Restlet;
+import org.restlet.data.Form;
 import org.restlet.data.MediaType;
+import org.restlet.data.Parameter;
 import org.restlet.routing.Router;
 
-public class AttendenceApplication extends Application {
+public class AttendenceLogApplication extends Application {
 
     /**
      * Creates a root Restlet that will receive all incoming calls.
@@ -26,9 +28,25 @@ public class AttendenceApplication extends Application {
             }
         };
 
+        Restlet createAttendance = new Restlet() {
+            @Override
+            public void handle(Request request, Response response) {
+
+                String message = "Your Parameters: ";
+                Form form = new Form(request.getEntity());
+                for (Parameter parameter : form) {
+                    message = message + "parameter: " + parameter.getName();
+                    message = message + " value: " + parameter.getValue() + " // ";
+                }
+
+                response.setEntity(message, MediaType.TEXT_PLAIN);
+            }
+        };
+
         // Defines routes
         router.attach("/test", test);
-        router.attachDefault(AttendanceResource.class);
+        router.attach("/list", AttendanceLogResource.class);
+        router.attach("/create", createAttendance);
 
         return router;
     }
