@@ -5,7 +5,6 @@ import com.googlecode.objectify.annotation.Id;
 
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
-import javax.xml.bind.annotation.XmlType;
 
 @XmlRootElement(name = "attendance")
 @Entity
@@ -13,6 +12,7 @@ public class Attendance {
     @XmlElement(name = "id")
     @Id private Long id;
     @XmlElement(name = "student_id")
+    //TODO: Change student_id to string
     private Long student_id;
     @XmlElement(name = "group_id")
     private Long group_id;
