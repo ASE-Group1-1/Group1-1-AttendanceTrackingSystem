@@ -37,14 +37,14 @@
         <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
             <param-name>org.restlet.application</param-name>
-            <param-value>de.ase11.attendanceTrackingSystem.AttendenceApplication</param-value>
+            <param-value>de.ase11.attendanceTrackingSystem.AttendenceLogApplication</param-value>
         </init-param>
     </servlet>
 
     <!-- Catch all requests -->
     <servlet-mapping>
         <servlet-name>AttendanceRestletServlet</servlet-name>
-        <url-pattern>/rest/attendance</url-pattern>
+        <url-pattern>/rest/attendance/*</url-pattern>
     </servlet-mapping>
 
 <!-- [END restlet_mappings] -->
