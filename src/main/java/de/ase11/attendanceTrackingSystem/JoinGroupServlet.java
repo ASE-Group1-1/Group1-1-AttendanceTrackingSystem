@@ -42,8 +42,8 @@ public class JoinGroupServlet extends HttpServlet {
 
         if(user != null) {
             String joinGroupId = req.getParameter("joinGroupId");
-            Long group_id = Long.valueOf(joinGroupId);
-            Group group = ObjectifyService.ofy().load().type(Group.class).id(group_id).now();
+            Long groupId = Long.valueOf(joinGroupId);
+            Group group = ObjectifyService.ofy().load().type(Group.class).id(groupId).now();
 
             boolean join = group.joinGroup(user);
 

@@ -50,7 +50,7 @@
         List<Group> groups = ObjectifyService.ofy()
             .load()
             .type(Group.class)
-            .order("group_number")
+            .order("groupNumber")
             .list();
 
         if (groups.isEmpty()) {
@@ -77,12 +77,12 @@
                 // List all groups
                 for (Group group : groups) {
                     pageContext.setAttribute("group_id", group.getId());
-                    pageContext.setAttribute("group_number", group.getGroup_number());
-                    pageContext.setAttribute("instructor_name", group.getInstructor_name());
+                    pageContext.setAttribute("groupNumber", group.getGroupNumber());
+                    pageContext.setAttribute("instructorName", group.getInstructorName());
 %>
                 <p>
-                    <b>Group ${fn:escapeXml(group_number)}</b>
-                    Instructor: ${fn:escapeXml(instructor_name)}
+                    <b>Group ${fn:escapeXml(groupNumber)}</b>
+                    Instructor: ${fn:escapeXml(instructorName)}
                     <form action="/join-group" method="post">
                         <div><input type="submit" value="Join this group"/></div>
                         <input type="hidden" name="joinGroupId" value="${fn:escapeXml(group_id)}"/>
@@ -91,15 +91,15 @@
 <%
                 }
             } else {
-                pageContext.setAttribute("group_number", current_users_group.getGroup_number());
-                pageContext.setAttribute("instructor_name", current_users_group.getInstructor_name());
-                pageContext.setAttribute("meeting_time", current_users_group.getMeeting_time());
-                pageContext.setAttribute("meeting_location", current_users_group.getMeeting_location());
+                pageContext.setAttribute("groupNumber", current_users_group.getGroupNumber());
+                pageContext.setAttribute("instructorName", current_users_group.getInstructorName());
+                pageContext.setAttribute("meetingTime", current_users_group.getMeetingTime());
+                pageContext.setAttribute("meetingLocation", current_users_group.getMeetingLocation());
 %>
-                <p>You are member in group ${fn:escapeXml(group_number)}</p>
-                <p>Instructor: ${fn:escapeXml(instructor_name)}</p>
-                <p>Time: ${fn:escapeXml(meeting_time)}</p>
-                <p>Location: ${fn:escapeXml(meeting_location)}</p>
+                <p>You are member in group ${fn:escapeXml(groupNumber)}</p>
+                <p>Instructor: ${fn:escapeXml(instructorName)}</p>
+                <p>Time: ${fn:escapeXml(meetingTime)}</p>
+                <p>Location: ${fn:escapeXml(meetingLocation)}</p>
 <%
             }
         }

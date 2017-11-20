@@ -14,10 +14,10 @@ import java.util.List;
 public class Group {
 	@Id private Long id;
 
-	@Index private int group_number;
-	private String meeting_location;
-	private String meeting_time;
-	private String instructor_name;
+	@Index private int groupNumber;
+	private String meetingLocation;
+	private String meetingTime;
+	private String instructorName;
     private List<User> members = new ArrayList<User>();
 
 	public Group() {
@@ -26,16 +26,16 @@ public class Group {
 	/**
 	 * The @param id should be set by Objectify automatically.
 	 * I'm not completely sure, yet if we should have it public or private is okay.
-	 * @param group_number
-	 * @param meeting_location
-	 * @param meeting_time
-	 * @param instructor_name
+	 * @param groupNumber
+	 * @param meetingLocation
+	 * @param meetingTime
+	 * @param instructorName
 	 */
-	public Group(int group_number, String meeting_location, String meeting_time, String instructor_name) {
-		this.group_number = group_number;
-		this.meeting_location = meeting_location;
-		this.meeting_time = meeting_time;
-		this.instructor_name = instructor_name;
+	public Group(int groupNumber, String meetingLocation, String meetingTime, String instructorName) {
+		this.groupNumber = groupNumber;
+		this.meetingLocation = meetingLocation;
+		this.meetingTime = meetingTime;
+		this.instructorName = instructorName;
 	}
 	
 	public boolean joinGroup (User user) {
@@ -62,52 +62,52 @@ public class Group {
 		return id;
 	}
 	/**
-	 * @return the group_number
+	 * @return the groupNumber
 	 */
-	public int getGroup_number() {
-		return group_number;
+	public int getGroupNumber() {
+		return groupNumber;
 	}
 	/**
-	 * @param group_number the group_number to set
+	 * @param groupNumber the groupNumber to set
 	 */
-	private void setGroup_number(int group_number) {
-		this.group_number = group_number;
+	private void setGroupNumber(int groupNumber) {
+		this.groupNumber = groupNumber;
 	}
 	/**
-	 * @return the meeting_location
+	 * @return the meetingLocation
 	 */
-	public String getMeeting_location() {
-		return meeting_location;
+	public String getMeetingLocation() {
+		return meetingLocation;
 	}
 	/**
-	 * @param meeting_location the meeting_location to set
+	 * @param meetingLocation the meetingLocation to set
 	 */
-	private void setMeeting_location(String meeting_location) {
-		this.meeting_location = meeting_location;
+	private void setMeetingLocation(String meetingLocation) {
+		this.meetingLocation = meetingLocation;
 	}
 	/**
-	 * @return the meeting_time
+	 * @return the meetingTime
 	 */
-	public String getMeeting_time() {
-		return meeting_time;
+	public String getMeetingTime() {
+		return meetingTime;
 	}
 	/**
-	 * @param meeting_time the meeting_time to set
+	 * @param meetingTime the meetingTime to set
 	 */
-	private void setMeeting_time(String meeting_time) {
-		this.meeting_time = meeting_time;
+	private void setMeetingTime(String meetingTime) {
+		this.meetingTime = meetingTime;
 	}
 	/**
-	 * @return the instructor_name
+	 * @return the instructorName
 	 */
-	public String getInstructor_name() {
-		return instructor_name;
+	public String getInstructorName() {
+		return instructorName;
 	}
 	/**
-	 * @param instructor_name the instructor_name to set
+	 * @param instructorName the instructorName to set
 	 */
-	private void setInstructor_name(String instructor_name) {
-		this.instructor_name = instructor_name;
+	private void setInstructorName(String instructorName) {
+		this.instructorName = instructorName;
 	}
     /**
      * @return the members
