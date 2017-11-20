@@ -11,28 +11,27 @@ import javax.xml.bind.annotation.XmlRootElement;
 public class Attendance {
     @XmlElement(name = "id")
     @Id private Long id;
-    @XmlElement(name = "student_id")
-    //TODO: Change student_id to string
-    private Long student_id;
-    @XmlElement(name = "group_id")
-    private Long group_id;
-    @XmlElement(name = "week_id")
-    private int week_id;
+    @XmlElement(name = "studentId")
+    private String studentId;
+    @XmlElement(name = "groupId")
+    private Long groupId;
+    @XmlElement(name = "weekId")
+    private int weekId;
     @XmlElement(name = "presented")
     private boolean presented;
 
     public Attendance() {};
 
-    public Attendance(Long student_id, Long group_id, int week_id) {
-        this.student_id = student_id;
-        this.group_id = group_id;
-        this.week_id = week_id;
+    public Attendance(String studentId, Long groupId, int weekId) {
+        this.studentId = studentId;
+        this.groupId = groupId;
+        this.weekId = weekId;
     }
 
-    public Attendance(Long student_id, Long group_id, int week_id, boolean presented) {
-        this.student_id = student_id;
-        this.group_id = group_id;
-        this.week_id = week_id;
+    public Attendance(String studentId, Long groupId, int weekId, boolean presented) {
+        this.studentId = studentId;
+        this.groupId = groupId;
+        this.weekId = weekId;
         this.presented = presented;
     }
 
@@ -41,16 +40,16 @@ public class Attendance {
         return id;
     }
 
-    public Long getStudent_id() {
-        return student_id;
+    public String getStudentId() {
+        return studentId;
     }
 
-    public Long getGroup_id() {
-        return group_id;
+    public Long getGroupId() {
+        return groupId;
     }
 
-    public int getWeek_id() {
-        return week_id;
+    public int getWeekId() {
+        return weekId;
     }
 
     public boolean hasPresented() {
