@@ -35,7 +35,7 @@ public class AttendenceLogApplication extends Application {
             public void handle(Request request, Response response) {
                 Form form = new Form(request.getEntity());
                 String xml = form.getValues("attendance");
-                Attendance attendance = Attendance.xmlToAttendance(xml);
+                Attendance attendance = Attendance.createAttendanceFromXml(xml);
 
                 ObjectifyService.ofy().save().entity(attendance).now();
 

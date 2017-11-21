@@ -43,7 +43,28 @@ public class Attendance {
         this.presented = presented;
     }
 
-    public static Attendance xmlToAttendance(String xml) {
+    public static Attendance createAttendanceFromXml(String xml) {
+        Attendance attendance = Attendance.xmlToAttendance(xml);
+
+        String studentId = attendance.getStudentId();
+        User user = new User(studentId,"gmail.com");
+
+        List<Group> groups = ObjectifyService.ofy().load().type(Group.class).list();
+        Group current_users_group = null;
+        for (Group group : groups) {
+            if(group.hasMember(user)) {
+                current_users_group = group;
+            }
+        }
+        Long fakeId = new Long("4644337115725824");
+        if(fakeId == attendance.getGroupId()) {
+            return attendance;
+        } else {
+            throw new IllegalArgumentException();
+        }
+    }
+
+    private static Attendance xmlToAttendance(String xml) {
 
         Attendance attendance = null;
         StringBuffer xmlStr = new StringBuffer(xml);
