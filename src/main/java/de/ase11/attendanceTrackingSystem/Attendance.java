@@ -1,10 +1,18 @@
 package de.ase11.attendanceTrackingSystem;
 
+import com.google.appengine.api.users.User;
+import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
 
+import javax.xml.bind.JAXBContext;
+import javax.xml.bind.JAXBException;
+import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlElement;
 import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.transform.stream.StreamSource;
+import java.io.StringReader;
+import java.util.List;
 
 @XmlRootElement(name = "attendance")
 @Entity
@@ -35,6 +43,23 @@ public class Attendance {
         this.presented = presented;
     }
 
+    public static Attendance xmlToAttendance(String xml) {
+
+        Attendance attendance = null;
+        StringBuffer xmlStr = new StringBuffer(xml);
+
+        JAXBContext context = null;
+        Unmarshaller u = null;
+        try {
+            context = JAXBContext.newInstance(Attendance.class);
+            u = context.createUnmarshaller();
+            attendance = (Attendance) u.unmarshal(new StreamSource( new StringReader( xmlStr.toString() ) ));
+        } catch (JAXBException e) {
+            e.printStackTrace();
+        }
+
+        return attendance;
+    }
 
     public Long getId() {
         return id;

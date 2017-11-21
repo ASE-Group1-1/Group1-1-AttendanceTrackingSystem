@@ -1,5 +1,6 @@
 package de.ase11.attendanceTrackingSystem;
 
+import com.googlecode.objectify.ObjectifyService;
 import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -8,6 +9,7 @@ import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.data.Parameter;
 import org.restlet.routing.Router;
+
 
 public class AttendenceLogApplication extends Application {
 
@@ -31,13 +33,13 @@ public class AttendenceLogApplication extends Application {
         Restlet createAttendance = new Restlet() {
             @Override
             public void handle(Request request, Response response) {
-
-                String message = "Your Parameters: ";
                 Form form = new Form(request.getEntity());
-                for (Parameter parameter : form) {
-                    message = message + "parameter: " + parameter.getName();
-                    message = message + " value: " + parameter.getValue() + " // ";
-                }
+                String xml = form.getValues("attendance");
+                Attendance attendance = Attendance.xmlToAttendance(xml);
+
+                ObjectifyService.ofy().save().entity(attendance).now();
+
+                String message=attendance.getId().toString();
 
                 response.setEntity(message, MediaType.TEXT_PLAIN);
             }
