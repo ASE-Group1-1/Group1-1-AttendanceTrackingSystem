@@ -1,5 +1,6 @@
 package de.ase11.attendanceTrackingSystem;
 
+import com.googlecode.objectify.ObjectifyService;
 import de.ase11.attendanceTrackingSystem.model.Attendance;
 
 import javax.xml.bind.annotation.XmlElement;
@@ -26,15 +27,10 @@ public class AttendanceLog {
         AttendanceLog attendanceLog = new AttendanceLog();
         attendanceLog.attendances = new ArrayList<>();
 
-        //Create dummy Attendances
-        //TODO: retrieve attendances from storage (maybe first from Objectify later from Notary)
-        Attendance attendance1 = new Attendance();
-        Attendance attendance2 = new Attendance();
-        attendance1.setPresented(true);
-        attendance2.setPresented(false);
-
-        attendanceLog.attendances.add(attendance1);
-        attendanceLog.attendances.add(attendance2);
+        List<Attendance> attendancesTmp = ObjectifyService.ofy().load().type(Attendance.class).list();
+        for (Attendance attendance : attendancesTmp) {
+            attendanceLog.attendances.add(attendance);
+        }
 
         return attendanceLog;
     }
