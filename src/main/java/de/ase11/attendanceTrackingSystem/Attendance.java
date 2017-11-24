@@ -56,8 +56,8 @@ public class Attendance {
                 current_users_group = group;
             }
         }
-        Long fakeId = new Long("4644337115725824");
-        if(fakeId == attendance.getGroupId()) {
+
+        if(current_users_group.getId().equals(attendance.getGroupId())) {
             return attendance;
         } else {
             throw new IllegalArgumentException();

@@ -35,11 +35,16 @@ public class AttendenceLogApplication extends Application {
             public void handle(Request request, Response response) {
                 Form form = new Form(request.getEntity());
                 String xml = form.getValues("attendance");
-                Attendance attendance = Attendance.createAttendanceFromXml(xml);
+                String message;
 
-                ObjectifyService.ofy().save().entity(attendance).now();
+                try {
+                    Attendance attendance = Attendance.createAttendanceFromXml(xml);
+                    ObjectifyService.ofy().save().entity(attendance).now();
 
-                String message=attendance.getId().toString();
+                    message = attendance.getId().toString();
+                } catch (IllegalArgumentException e) {
+                    message = "The specified user is not a member of this group!";
+                }
 
                 response.setEntity(message, MediaType.TEXT_PLAIN);
             }
