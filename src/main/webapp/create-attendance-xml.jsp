@@ -13,7 +13,7 @@
     <div class="container">
         <h1>Create an Attendance</h1>
 
-        <form action="http://localhost:8080/rest/attendance/create" method="post">
+        <form action="/rest/attendance/create" method="post">
             <div class="form-group">
                 <label for="attendance">Enter the xml that you want to send</label>
                 <textarea rows="8" class="form-control" name="attendance" id="attendance">
