@@ -56,7 +56,7 @@
         if (groups.isEmpty()) {
 %>
         <p>There are no groups, yet.</p>
-        <form action="/create-groups" method="post">
+        <form action="/group/create-initial-set" method="post">
             <div><input type="submit" value="Create Initial Set of Groups"/></div>
             <input type="hidden" name="createGroups" value="true"/>
         </form>
@@ -83,7 +83,7 @@
                 <p>
                     <b>Group ${fn:escapeXml(groupNumber)}</b>
                     Instructor: ${fn:escapeXml(instructorName)}
-                    <form action="/join-group" method="post">
+                    <form action="/group/join" method="post">
                         <div><input type="submit" value="Join this group"/></div>
                         <input type="hidden" name="joinGroupId" value="${fn:escapeXml(group_id)}"/>
                     </form>

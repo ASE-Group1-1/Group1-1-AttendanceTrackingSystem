@@ -32,11 +32,24 @@ import java.io.IOException;
  * Form Handling Servlet
  * This servlet will take http requests and process them.
  */
-public class JoinGroupServlet extends HttpServlet {
+public class GroupServlet extends HttpServlet {
 
     // Process the http POST of the form
     @Override
     public void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+        String uri = req.getRequestURI();
+        if(uri.equals("/group/join")) {
+            this.joinGroup(req, resp);
+        } else if(uri.equals("/group/create-initial-set")) {
+            this.createInitialGroupSet(req, resp);
+        } else {
+            resp.sendError(404, uri);
+        }
+
+    }
+
+
+    private void joinGroup(HttpServletRequest req, HttpServletResponse resp) throws IOException {
 
         UserService userService = UserServiceFactory.getUserService();
         User user = userService.getCurrentUser();  // Find out who the user is.
@@ -58,5 +71,23 @@ public class JoinGroupServlet extends HttpServlet {
             resp.sendRedirect("/error.jsp?errorCode=1");
         }
     }
+
+    private void createInitialGroupSet (HttpServletRequest req, HttpServletResponse resp) throws IOException {
+
+        Group group1 = new Group(1,"Room 1", "Monday 9:00am", "Max");
+        Group group2 = new Group(2,"Room 2", "Tuesday 9:00am", "Ana");
+        Group group3 = new Group(3,"Room 3", "Wednesday 9:00am", "Max");
+        Group group4 = new Group(4,"Room 4", "Thursday 9:00am", "Ana");
+        Group group5 = new Group(5,"Room 5", "Friday 9:00am", "Max");
+
+        ObjectifyService.ofy().save().entity(group1).now();
+        ObjectifyService.ofy().save().entity(group2).now();
+        ObjectifyService.ofy().save().entity(group3).now();
+        ObjectifyService.ofy().save().entity(group4).now();
+        ObjectifyService.ofy().save().entity(group5).now();
+
+        resp.sendRedirect("/landingpage.jsp");
+    }
+
 }
 //[END all]
