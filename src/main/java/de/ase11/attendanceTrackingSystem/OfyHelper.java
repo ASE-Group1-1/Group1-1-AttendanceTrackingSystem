@@ -16,9 +16,9 @@
 //[START all]
 package de.ase11.attendanceTrackingSystem;
 
-import com.googlecode.objectify.Objectify;
-import com.googlecode.objectify.ObjectifyFactory;
 import com.googlecode.objectify.ObjectifyService;
+import de.ase11.attendanceTrackingSystem.model.Attendance;
+import de.ase11.attendanceTrackingSystem.model.Group;
 
 import javax.servlet.ServletContextListener;
 import javax.servlet.ServletContextEvent;

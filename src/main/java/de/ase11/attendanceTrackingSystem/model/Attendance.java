@@ -1,4 +1,4 @@
-package de.ase11.attendanceTrackingSystem;
+package de.ase11.attendanceTrackingSystem.model;
 
 import com.google.appengine.api.users.User;
 import com.googlecode.objectify.ObjectifyService;

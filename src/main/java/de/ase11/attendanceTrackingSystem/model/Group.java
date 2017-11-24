@@ -1,4 +1,4 @@
-package de.ase11.attendanceTrackingSystem;
+package de.ase11.attendanceTrackingSystem.model;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;

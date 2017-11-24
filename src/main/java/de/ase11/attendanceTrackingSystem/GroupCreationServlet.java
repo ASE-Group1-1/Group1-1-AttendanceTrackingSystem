@@ -21,6 +21,7 @@ import com.google.appengine.api.users.User;
 import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
+import de.ase11.attendanceTrackingSystem.model.Group;
 
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;

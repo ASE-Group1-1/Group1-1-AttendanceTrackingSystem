@@ -1,5 +1,6 @@
 package de.ase11.attendanceTrackingSystem;
 
+import de.ase11.attendanceTrackingSystem.model.Attendance;
 import org.restlet.resource.Post;
 import org.restlet.resource.ServerResource;
 
