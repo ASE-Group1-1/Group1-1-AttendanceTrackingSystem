@@ -1,6 +1,7 @@
 package de.ase11.attendanceTrackingSystem.rest;
 
 import com.googlecode.objectify.ObjectifyService;
+import de.ase11.attendanceTrackingSystem.AttendanceLog;
 import de.ase11.attendanceTrackingSystem.model.Attendance;
 import de.ase11.attendanceTrackingSystem.rest.AttendanceLogResource;
 import org.restlet.Application;
@@ -11,7 +12,11 @@ import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.routing.Router;
 
+import javax.xml.bind.JAXB;
+import javax.xml.bind.JAXBException;
+import java.io.IOException;
 
+// TODO: Remove typo from classname
 public class AttendenceApplication extends Application {
 
     /**
@@ -51,10 +56,54 @@ public class AttendenceApplication extends Application {
             }
         };
 
+        Restlet groups = new Restlet() {
+            @Override
+            public void handle(Request request, Response response) {
+                String message;
+
+                String tmp = (String) request.getAttributes().get("groupId");
+                Long groupId = new Long(tmp);
+
+                try {
+                    AttendanceLog attendanceLog = AttendanceLog.createGroupAttendanceLog(groupId);
+
+                    message = attendanceLog.attendanceLogToXml();
+                } catch(JAXBException | IOException e) {
+                    message = "ERROR";
+                }
+
+                response.setEntity(message, MediaType.TEXT_PLAIN);
+            }
+        };
+
+        Restlet users = new Restlet() {
+            @Override
+            public void handle(Request request, Response response) {
+                String message;
+
+                String userId = (String) request.getAttributes().get("userId");
+
+                try {
+                    AttendanceLog attendanceLog = AttendanceLog.createUserAttendanceLog(userId);
+
+                    message = attendanceLog.attendanceLogToXml();
+                } catch(JAXBException | IOException e) {
+                    message = "ERROR";
+                }
+
+                response.setEntity(message, MediaType.TEXT_PLAIN);
+            }
+        };
+
         // Defines routes
         router.attach("/test", test);
-        router.attach("/list", AttendanceLogResource.class);
         router.attach("/create", createAttendance);
+        // TODO: Choose one way of handling requests either using the Resource or doing it without.
+        // Either all of them should be moved to the AttendanceLogResource class or
+        // the class should be completely removed and everything should be done in here.
+        router.attach("/list", AttendanceLogResource.class);
+        router.attach("/list/groups/{groupId}", groups);
+        router.attach("/list/users/{userId}", users);
 
         return router;
     }

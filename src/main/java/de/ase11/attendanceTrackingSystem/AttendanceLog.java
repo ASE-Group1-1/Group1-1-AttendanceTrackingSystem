@@ -40,6 +40,32 @@ public class AttendanceLog {
         return attendanceLog;
     }
 
+    public static AttendanceLog createGroupAttendanceLog(Long groupId) {
+        AttendanceLog attendanceLog = new AttendanceLog();
+        attendanceLog.attendances = new ArrayList<>();
+
+        List<Attendance> attendancesTmp = ObjectifyService.ofy().load().type(Attendance.class).list();
+        for (Attendance attendance : attendancesTmp) {
+            if(groupId.equals(attendance.getGroupId()))
+            attendanceLog.attendances.add(attendance);
+        }
+
+        return attendanceLog;
+    }
+
+    public static AttendanceLog createUserAttendanceLog(String userId) {
+        AttendanceLog attendanceLog = new AttendanceLog();
+        attendanceLog.attendances = new ArrayList<>();
+
+        List<Attendance> attendancesTmp = ObjectifyService.ofy().load().type(Attendance.class).list();
+        for (Attendance attendance : attendancesTmp) {
+            if(userId.equals(attendance.getStudentId()))
+                attendanceLog.attendances.add(attendance);
+        }
+
+        return attendanceLog;
+    }
+
     public String attendanceLogToXml() throws JAXBException, IOException {
         OutputStream output = new OutputStream()
         {
