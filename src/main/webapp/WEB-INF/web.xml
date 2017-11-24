@@ -37,7 +37,7 @@
         <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
         <init-param>
             <param-name>org.restlet.application</param-name>
-            <param-value>de.ase11.attendanceTrackingSystem.AttendenceApplication</param-value>
+            <param-value>de.ase11.attendanceTrackingSystem.rest.AttendenceApplication</param-value>
         </init-param>
     </servlet>
 

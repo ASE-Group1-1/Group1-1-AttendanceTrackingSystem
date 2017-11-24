@@ -1,5 +1,6 @@
-package de.ase11.attendanceTrackingSystem;
+package de.ase11.attendanceTrackingSystem.rest;
 
+import de.ase11.attendanceTrackingSystem.AttendanceLog;
 import org.restlet.resource.Get;
 import org.restlet.resource.ServerResource;
 

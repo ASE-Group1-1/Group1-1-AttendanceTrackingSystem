@@ -1,7 +1,8 @@
-package de.ase11.attendanceTrackingSystem;
+package de.ase11.attendanceTrackingSystem.rest;
 
 import com.googlecode.objectify.ObjectifyService;
 import de.ase11.attendanceTrackingSystem.model.Attendance;
+import de.ase11.attendanceTrackingSystem.rest.AttendanceLogResource;
 import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
