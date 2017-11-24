@@ -5,7 +5,6 @@
 <%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
 
 <%-- //[START imports]--%>
-<%@ page import="de.ase11.attendanceTrackingSystem.Group" %>
 <%@ page import="com.googlecode.objectify.Key" %>
 <%@ page import="com.googlecode.objectify.ObjectifyService" %>
 <%-- //[END imports]--%>
