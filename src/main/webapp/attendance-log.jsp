@@ -14,7 +14,7 @@
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <%@ include file="parts/header.jsp" %>
-<script src="/js/attendance-log-filter.js"></script>
+
 
 
 
@@ -87,4 +87,5 @@
 
 
 <%@ include file="parts/footer.jsp" %>
+<script src="/js/attendance-log-filter.js"></script>
 <%-- //[END all]--%>
