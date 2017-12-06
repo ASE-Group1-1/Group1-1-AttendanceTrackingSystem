@@ -13,77 +13,10 @@
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<html>
-<head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css"/>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
-        <script>
-            var limitCount;
-            var setLimit = false;
-            $(document).ready(getAttendances());
+<%@ include file="parts/header.jsp" %>
+<script src="/js/attendance-log-filter.js"></script>
 
-            $(document).on('change','#group',function(){
-                if (this.value != "all") {
-                    getAttendances();
-                } else {
-                    getAttendances();
-                }
-            });
 
-            $(document).on('change','#limit',function(){
-                limitCount = parseInt(this.value);
-                if (this.value != "all") {
-                    setLimit = true;
-                    getAttendances();
-                } else {
-                    setLimit = false;
-                    getAttendances();
-                }
-            });
-
-            function getAttendances()
-            {
-                $( "#container" ).empty();
-                if (typeof group !== 'undefined' && group.value != "all") {
-                    $.ajax({
-                        type: "GET",
-                        dataType: "xml",
-                        url: "/rest/attendance/list/groups/" + group.value,
-                        success: xmlParser
-                    });
-                } else {
-                    $.ajax({
-                        type: "GET",
-                        dataType: "xml",
-                        url: "/rest/attendance/list",
-                        success: xmlParser
-                    });
-                }
-            };
-
-            function xmlParser(xml)
-            {
-                $(xml).find("attendance").each(function(i){
-                    if(i == limitCount && setLimit == true){
-                        return false;
-                    }
-                    $("#container").append('<div class="attendance"><p>Student: '
-                        + $(this).find("studentId").text()
-                        + '<br> Group: '
-                        + $(this).find("groupId").text()
-                        + '<br> Week: '
-                        + $(this).find("weekId").text()
-                        + '<br> Presented: '
-                        + $(this).find("presented").text()
-                        + '</p></div>');
-                    $(".attendance").fadeIn(50);
-                });
-            };
-
-        </script>
-</head>
-
-<body>
 
     <h1>Attendance Log</h1>
 

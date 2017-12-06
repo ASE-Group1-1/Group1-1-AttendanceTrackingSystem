@@ -13,12 +13,9 @@
 <%@ page import="java.util.List" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
-<html>
-<head>
-    <link type="text/css" rel="stylesheet" href="/stylesheets/main.css"/>
-</head>
 
-<body>
+
+<%@ include file="parts/header.jsp" %>
 
     <h1>Welcome to the Attendance Tracking System!</h1>
 
