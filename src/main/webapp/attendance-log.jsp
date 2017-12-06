@@ -86,7 +86,5 @@
 %>
 
 
-
-</body>
-</html>
+<%@ include file="parts/footer.jsp" %>
 <%-- //[END all]--%>
