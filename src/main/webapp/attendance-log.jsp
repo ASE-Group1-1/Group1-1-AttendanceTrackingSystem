@@ -50,7 +50,7 @@
 </select>
 
 
-<div id="container"></div>
+<div id="attendance-container"></div>
 
 
 <%

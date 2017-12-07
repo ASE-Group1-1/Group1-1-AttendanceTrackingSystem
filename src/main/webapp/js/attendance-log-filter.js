@@ -22,7 +22,7 @@ $(document).on('change', '#limit', function() {
 });
 
 function getAttendances() {
-    $("#container").empty();
+    $("#attendance-container").empty();
     if (typeof group !== 'undefined' && group.value != "all") {
         $.ajax({
             type: "GET",
@@ -45,7 +45,7 @@ function xmlParser(xml) {
         if (i == limitCount && setLimit == true) {
             return false;
         }
-        $("#container").append('<div class="attendance"><p>Student: ' +
+        $("#attendance-container").append('<div class="attendance"><p>Student: ' +
             $(this).find("studentId").text() +
             '<br> Group: ' +
             $(this).find("groupId").text() +
