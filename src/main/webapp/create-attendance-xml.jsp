@@ -1,5 +1,3 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
 <%@ include file="parts/header.jsp" %>
 
         <h1>Create an Attendance</h1>

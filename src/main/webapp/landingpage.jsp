@@ -1,9 +1,3 @@
-<%-- //[START all]--%>
-<%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<%@ page import="com.google.appengine.api.users.User" %>
-<%@ page import="com.google.appengine.api.users.UserService" %>
-<%@ page import="com.google.appengine.api.users.UserServiceFactory" %>
-
 <%-- //[START imports]--%>
 <%@ page import="de.ase11.attendanceTrackingSystem.model.Group" %>
 <%@ page import="com.googlecode.objectify.Key" %>
@@ -20,23 +14,18 @@
     <h1>Welcome to the Attendance Tracking System!</h1>
 
 <%
-    UserService userService = UserServiceFactory.getUserService();
-    User user = userService.getCurrentUser();
     if (user != null) {
         pageContext.setAttribute("user", user);
 %>
 
     <p>
-        Hello, ${fn:escapeXml(user.nickname)}! (You can
-        <a href="<%= userService.createLogoutURL(request.getRequestURI()) %>">sign out</a>.)
+        Hello, ${fn:escapeXml(user.nickname)}!
     </p>
 <%
     } else {
 %>
     <p>
-        Hello!
-        <a href="<%= userService.createLoginURL(request.getRequestURI()) %>">Sign in</a>
-        to join a group.
+        Hello! Sign in to join a group.
     </p>
 <%
     }
