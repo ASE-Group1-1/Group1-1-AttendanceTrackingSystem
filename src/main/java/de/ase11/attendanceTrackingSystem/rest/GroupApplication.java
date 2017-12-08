@@ -5,6 +5,7 @@ import com.google.appengine.api.users.UserService;
 import com.google.appengine.api.users.UserServiceFactory;
 import com.googlecode.objectify.ObjectifyService;
 import de.ase11.attendanceTrackingSystem.GroupList;
+import de.ase11.attendanceTrackingSystem.model.AttendanceTokens;
 import de.ase11.attendanceTrackingSystem.model.Group;
 import org.restlet.Application;
 import org.restlet.Request;
@@ -82,6 +83,8 @@ public class GroupApplication extends Application {
                     boolean join = group.joinGroup(user);
 
                     if(join) {
+                        AttendanceTokens attendanceTokens = AttendanceTokens.createAttendanceTokens(user.getUserId(),13);
+                        ObjectifyService.ofy().save().entity(attendanceTokens).now();
                         ObjectifyService.ofy().save().entity(group).now();
                         message="SUCCESS";
                     } else {

@@ -18,6 +18,7 @@ package de.ase11.attendanceTrackingSystem;
 
 import com.googlecode.objectify.ObjectifyService;
 import de.ase11.attendanceTrackingSystem.model.Attendance;
+import de.ase11.attendanceTrackingSystem.model.AttendanceTokens;
 import de.ase11.attendanceTrackingSystem.model.Group;
 
 import javax.servlet.ServletContextListener;
@@ -33,6 +34,7 @@ public class OfyHelper implements ServletContextListener {
     // request.
     ObjectifyService.register(Group.class);
     ObjectifyService.register(Attendance.class);
+    ObjectifyService.register(AttendanceTokens.class);
   }
 
   public void contextDestroyed(ServletContextEvent event) {
