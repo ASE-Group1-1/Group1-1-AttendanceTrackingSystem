@@ -1,19 +1,6 @@
-<%-- //[START imports]--%>
-<%@ page import="de.ase11.attendanceTrackingSystem.model.Group" %>
-<%@ page import="com.googlecode.objectify.Key" %>
-<%@ page import="com.googlecode.objectify.ObjectifyService" %>
-<%-- //[END imports]--%>
-
-<%@ page import="java.util.List" %>
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-
 <%@ include file="parts/header.jsp" %>
 
-
-
-
-    <h1>Attendance Log</h1>
-
+<h1>Attendance Log</h1>
 
 <label for="limit">Limit</label>
 <select id="limit">
@@ -32,31 +19,9 @@
 <label for="group">Select Group</label>
 <select id="group" name="group">
     <option value="all">all</option>
-<%
-    List<Group> groups = ObjectifyService.ofy()
-        .load()
-        .type(Group.class)
-        .order("groupNumber")
-        .list();
-
-    for (Group group : groups) {
-        pageContext.setAttribute("groupId", group.getId());
-        pageContext.setAttribute("groupNumber", group.getGroupNumber());
-%>
-        <option value="${fn:escapeXml(groupId)}">${fn:escapeXml(groupNumber)}</option>
-<%
-    }
-%>
 </select>
 
-
 <div id="attendance-container"></div>
-
-
-<%
-
-%>
-
 
 <%@ include file="parts/footer.jsp" %>
 <script src="/js/attendance-log-filter.js"></script>

@@ -1,5 +1,6 @@
 var limitCount;
 var setLimit = false;
+$(document).ready(getGroups());
 $(document).ready(getAttendances());
 
 $(document).on('change', '#group', function() {
@@ -55,5 +56,23 @@ function xmlParser(xml) {
             $(this).find("presented").text() +
             '</p></div>');
         $(".attendance").fadeIn(50);
+    });
+};
+
+function getGroups() {
+    $.ajax({
+        type: "GET",
+        dataType: "xml",
+        url: "/rest/group/list",
+        success: groupXmlParser
+    });
+};
+
+function groupXmlParser(xml) {
+    $(xml).find("group").each(function() {
+        $("#group").append('<option class="group-option" value="' + $(this).find("id").text() + '">' +
+            $(this).find("groupNumber").text() +
+            '</option>');
+        $(".group-option").fadeIn(50);
     });
 };
