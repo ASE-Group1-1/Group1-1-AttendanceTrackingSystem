@@ -38,6 +38,10 @@ public class GroupList {
         return groupList;
     }
 
+    public boolean isEmpty(){
+        return this.groups.isEmpty();
+    }
+
     public String groupListToXml() throws JAXBException, IOException {
         OutputStream output = new OutputStream()
         {
