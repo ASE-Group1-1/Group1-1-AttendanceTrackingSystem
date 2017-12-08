@@ -42,7 +42,7 @@
         if (groups.isEmpty()) {
 %>
         <p>There are no groups, yet.</p>
-        <form action="/group/create-initial-set" method="post">
+        <form action="/rest/group/create/initial-set" method="post">
             <div><input type="submit" value="Create Initial Set of Groups"/></div>
             <input type="hidden" name="createGroups" value="true"/>
         </form>
@@ -59,23 +59,14 @@
             if(current_users_group == null) {
 %>
                 <p>Join one of the following groups.</p>
+
+                <form id="join-group-form" method="post">
+                    <label for="group">Select Group</label>
+                    <select id="group" name="joinGroupId">
+                    </select>
+                    <div><input id="join-group-button" type="submit" value="Join this group"/></div>
+                </form>
 <%
-                // List all groups
-                for (Group group : groups) {
-                    pageContext.setAttribute("group_id", group.getId());
-                    pageContext.setAttribute("groupNumber", group.getGroupNumber());
-                    pageContext.setAttribute("instructorName", group.getInstructorName());
-%>
-                <p>
-                    <b>Group ${fn:escapeXml(groupNumber)}</b>
-                    Instructor: ${fn:escapeXml(instructorName)}
-                    <form action="/group/join" method="post">
-                        <div><input type="submit" value="Join this group"/></div>
-                        <input type="hidden" name="joinGroupId" value="${fn:escapeXml(group_id)}"/>
-                    </form>
-                </p>
-<%
-                }
             } else {
                 pageContext.setAttribute("groupId", current_users_group.getId());
                 pageContext.setAttribute("groupNumber", current_users_group.getGroupNumber());
@@ -96,4 +87,5 @@
 
 
 <%@ include file="parts/footer.jsp" %>
+<script src="/js/home.js"></script>
 <%-- //[END all]--%>
