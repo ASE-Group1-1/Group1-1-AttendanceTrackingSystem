@@ -6,17 +6,25 @@ import com.googlecode.objectify.annotation.Index;
 
 import com.google.appengine.api.users.User;
 
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import java.lang.String;
 import java.util.ArrayList;
 import java.util.List;
 
+@XmlRootElement(name = "group")
 @Entity
 public class Group {
+	@XmlElement(name = "id")
 	@Id private Long id;
 
+	@XmlElement(name = "groupNumber")
 	@Index private int groupNumber;
+	@XmlElement(name = "meetingLocation")
 	private String meetingLocation;
+	@XmlElement(name = "meetingTime")
 	private String meetingTime;
+	@XmlElement(name = "instructorName")
 	private String instructorName;
     private List<User> members = new ArrayList<User>();
 

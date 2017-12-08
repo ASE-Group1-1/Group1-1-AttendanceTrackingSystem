@@ -20,6 +20,7 @@
 <!-- [END standard_mappings] -->
 
 <!-- [START restlet_mappings] -->
+    <!-- Catch attendance requests -->
     <display-name>attendance servlet</display-name>
 
     <servlet>
@@ -31,10 +32,28 @@
         </init-param>
     </servlet>
 
-    <!-- Catch all requests -->
+
     <servlet-mapping>
         <servlet-name>AttendanceRestletServlet</servlet-name>
         <url-pattern>/rest/attendance/*</url-pattern>
+    </servlet-mapping>
+
+    <!-- Catch group requests -->
+    <display-name>group servlet</display-name>
+
+    <servlet>
+        <servlet-name>GroupRestletServlet</servlet-name>
+        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+        <init-param>
+            <param-name>org.restlet.application</param-name>
+            <param-value>de.ase11.attendanceTrackingSystem.rest.GroupApplication</param-value>
+        </init-param>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>GroupRestletServlet</servlet-name>
+        <url-pattern>/rest/group/*</url-pattern>
     </servlet-mapping>
 
 <!-- [END restlet_mappings] -->
