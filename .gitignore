@@ -12,6 +12,8 @@ buildNumber.properties
 .project
 .idea
 attendanceTrackingSystem.iml
+src/main/main.iml
+src/test/test.iml
 
 # Avoid ignoring Maven wrapper jar file (.jar files are usually ignored)
 !/.mvn/wrapper/maven-wrapper.jar
