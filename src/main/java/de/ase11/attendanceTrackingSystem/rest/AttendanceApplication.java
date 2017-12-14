@@ -1,9 +1,11 @@
 package de.ase11.attendanceTrackingSystem.rest;
 
-import com.googlecode.objectify.ObjectifyService;
 import de.ase11.attendanceTrackingSystem.AttendanceLog;
 import de.ase11.attendanceTrackingSystem.model.Attendance;
-import de.ase11.attendanceTrackingSystem.rest.AttendanceLogResource;
+import de.ase11.attendanceTrackingSystem.model.AttendanceTokens;
+
+import com.googlecode.objectify.ObjectifyService;
+
 import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -12,7 +14,6 @@ import org.restlet.data.Form;
 import org.restlet.data.MediaType;
 import org.restlet.routing.Router;
 
-import javax.xml.bind.JAXB;
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
 
@@ -50,6 +51,24 @@ public class AttendanceApplication extends Application {
                 } catch (IllegalArgumentException e) {
                     message = "The specified user is not a member of this group!";
                 }
+
+                response.setEntity(message, MediaType.TEXT_PLAIN);
+            }
+        };
+
+        Restlet getToken = new Restlet() {
+            @Override
+            public void handle(Request request, Response response) {
+                String message;
+
+                Form form = request.getResourceRef().getQueryAsForm();
+                String studentId = form.getValues("studentId");
+                String weekNumberTmp = form.getValues("weekNumber");
+                int weekNumber = Integer.parseInt(weekNumberTmp);
+
+                AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentId", studentId).first().now();
+                String token = attendanceTokens.getAttendanceTokenByWeek(weekNumber);
+                message = token;
 
                 response.setEntity(message, MediaType.TEXT_PLAIN);
             }
@@ -97,6 +116,7 @@ public class AttendanceApplication extends Application {
         // Defines routes
         router.attach("/test", test);
         router.attach("/create", createAttendance);
+        router.attach("/token/get", getToken);
         // TODO: Choose one way of handling requests either using the Resource or doing it without.
         // Either all of them should be moved to the AttendanceLogResource class or
         // the class should be completely removed and everything should be done in here.
