@@ -60,10 +60,10 @@
                 <p>Join one of the following groups.</p>
 
                 <form id="join-group-form" method="post">
-                    <label for="group">Select Group</label>
-                    <select id="group" name="joinGroupId">
-                    </select>
-                    <div><input id="join-group-button" type="submit" value="Join this group"/></div>
+                    <label for="select-group">Please select:</label>
+                    <div id="select-group">
+                    </div>
+                    <div><input id="join-group-button" class="btn btn-primary" type="submit" value="Join this group"/></div>
                 </form>
 <%
             } else {
