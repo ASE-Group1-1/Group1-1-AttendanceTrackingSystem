@@ -83,7 +83,7 @@ public class GroupApplication extends Application {
                     boolean join = group.joinGroup(user);
 
                     if(join) {
-                        AttendanceTokens attendanceTokens = AttendanceTokens.createAttendanceTokens(user.getUserId(),13);
+                        AttendanceTokens attendanceTokens = AttendanceTokens.createAttendanceTokens(user.getEmail(),13);
                         ObjectifyService.ofy().save().entity(attendanceTokens).now();
                         ObjectifyService.ofy().save().entity(group).now();
                         message="SUCCESS";

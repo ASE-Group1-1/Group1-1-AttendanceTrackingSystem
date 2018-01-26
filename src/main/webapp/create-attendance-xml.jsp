@@ -12,6 +12,7 @@
 <groupId>4785074604081152</groupId>
 <weekId>0</weekId>
 <presented>true</presented>
+<attendanceToken></attendanceToken>
 </xs:attendance>
                 </textarea>
             </div>
