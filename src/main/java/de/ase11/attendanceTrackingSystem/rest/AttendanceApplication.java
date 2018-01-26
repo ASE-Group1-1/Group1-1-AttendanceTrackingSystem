@@ -49,7 +49,7 @@ public class AttendanceApplication extends Application {
 
                     message = attendance.getId().toString();
                 } catch (IllegalArgumentException e) {
-                    message = "The specified user is not a member of this group!";
+                    message = "Whoops! You provided invalid arguments when creating the attendance!";
                 }
 
                 response.setEntity(message, MediaType.TEXT_PLAIN);

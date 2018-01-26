@@ -27,6 +27,8 @@ public class Attendance {
     private int weekId;
     @XmlElement(name = "presented")
     private boolean presented;
+    @XmlElement(name = "attendanceToken")
+    private String attendanceToken;
 
     public Attendance() {};
 
@@ -57,7 +59,13 @@ public class Attendance {
             }
         }
 
-        if(current_users_group.getId().equals(attendance.getGroupId())) {
+
+        AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentId", user.getEmail()).first().now();
+        String token1 = attendance.getAttendanceToken();
+        String token2 = attendanceTokens.getAttendanceTokenByWeek(attendance.getWeekId());
+        boolean validToken = token1.equals(token2);
+
+        if(current_users_group.getId().equals(attendance.getGroupId()) && validToken) {
             return attendance;
         } else {
             throw new IllegalArgumentException();
@@ -94,6 +102,10 @@ public class Attendance {
         return groupId;
     }
 
+    public String getAttendanceToken() {
+        return attendanceToken;
+    }
+
     public int getWeekId() {
         return weekId;
     }
@@ -105,4 +117,5 @@ public class Attendance {
     public void setPresented(boolean presented) {
         this.presented = presented;
     }
+
 }
