@@ -17,6 +17,7 @@ import org.restlet.routing.Router;
 
 import javax.xml.bind.JAXBException;
 import java.io.IOException;
+import java.util.List;
 
 public class GroupApplication extends Application {
 
@@ -52,11 +53,7 @@ public class GroupApplication extends Application {
                     Group group4 = new Group(4, "Room 4", "Thursday 9:00am", "Ana");
                     Group group5 = new Group(5, "Room 5", "Friday 9:00am", "Max");
 
-                    ObjectifyService.ofy().save().entity(group1).now();
-                    ObjectifyService.ofy().save().entity(group2).now();
-                    ObjectifyService.ofy().save().entity(group3).now();
-                    ObjectifyService.ofy().save().entity(group4).now();
-                    ObjectifyService.ofy().save().entity(group5).now();
+                    ObjectifyService.ofy().save().entities(group1, group2, group3, group4, group5).now();
 
                     message = "SUCCESS";
                 } else {
@@ -75,20 +72,27 @@ public class GroupApplication extends Application {
                 User user = userService.getCurrentUser();  // Find out who the user is.
 
                 if(user != null) {
-                    Form form = new Form(request.getEntity());
-                    String joinGroupId = form.getValues("joinGroupId");
-                    Long groupId = Long.valueOf(joinGroupId);
-                    Group group = ObjectifyService.ofy().load().type(Group.class).id(groupId).now();
 
-                    boolean join = group.joinGroup(user);
+                    Group currentUserGroup = getUserGroup(user);
 
-                    if(join) {
-                        AttendanceTokens attendanceTokens = AttendanceTokens.createAttendanceTokens(user.getEmail(),13);
-                        ObjectifyService.ofy().save().entity(attendanceTokens).now();
-                        ObjectifyService.ofy().save().entity(group).now();
-                        message="SUCCESS";
+                    if(currentUserGroup == null) {
+                        Form form = new Form(request.getEntity());
+                        String joinGroupId = form.getValues("joinGroupId");
+                        Long groupId = Long.valueOf(joinGroupId);
+                        Group group = ObjectifyService.ofy().load().type(Group.class).id(groupId).now();
+
+                        boolean join = group.joinGroup(user);
+
+                        if (join) {
+                            AttendanceTokens attendanceTokens = AttendanceTokens.createAttendanceTokens(user.getEmail(), 13);
+                            ObjectifyService.ofy().save().entity(attendanceTokens).now();
+                            ObjectifyService.ofy().save().entity(group).now();
+                            message = "SUCCESS";
+                        } else {
+                            message = "ERROR";
+                        }
                     } else {
-                        message="ERROR";
+                        message = "User is already member of a group";
                     }
                 } else {
                     message = ("errorCode=1");
@@ -114,13 +118,45 @@ public class GroupApplication extends Application {
             }
         };
 
+        Restlet userGroupId = new Restlet() {
+            @Override
+            public void handle(Request request, Response response) {
+                String message;
+                String userEmail = (String) request.getAttributes().get("userEmail");
+
+                User user = new User(userEmail,"gmail.com");
+
+                Group userGroup = getUserGroup(user);
+                if(userGroup != null) {
+                    message = userGroup.getId().toString();
+                } else {
+                    message = "User is not member in any group, yet!";
+                }
+
+                response.setEntity(message, MediaType.TEXT_PLAIN);
+            }
+        };
+
         // Defines routes
         router.attach("/create", create);
         router.attach("/create/initial-set", createInitialSet);
         router.attach("/join", join);
         router.attach("/list", list);
+        router.attach("/user/{userEmail}", userGroupId);
+
 
         return router;
+    }
+
+    private Group getUserGroup(User user){
+        List<Group> groups = ObjectifyService.ofy().load().type(Group.class).list();
+        Group userGroup = null;
+        for (Group group : groups) {
+            if(group.hasMember(user)) {
+                userGroup = group;
+            }
+        }
+        return userGroup;
     }
 
 }
