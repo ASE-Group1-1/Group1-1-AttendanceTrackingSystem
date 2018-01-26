@@ -11,14 +11,14 @@ import java.util.UUID;
 @Entity
 public class AttendanceTokens {
     @Id private Long id;
-    @Index private String studentId;
+    @Index private String studentEmail;
     private List<String> tokens = new ArrayList<String>();
 
     public AttendanceTokens() {};
 
-    public static AttendanceTokens createAttendanceTokens(String studentId, int numberOfWeeks) {
+    public static AttendanceTokens createAttendanceTokens(String studentEmail, int numberOfWeeks) {
         AttendanceTokens attendanceTokens = new AttendanceTokens();
-        attendanceTokens.studentId = studentId;
+        attendanceTokens.studentEmail = studentEmail;
         attendanceTokens.tokens = new ArrayList<>();
 
         for (int i = 0; i < numberOfWeeks; i++) {

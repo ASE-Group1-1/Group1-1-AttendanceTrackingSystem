@@ -62,11 +62,11 @@ public class AttendanceApplication extends Application {
                 String message;
 
                 Form form = request.getResourceRef().getQueryAsForm();
-                String studentId = form.getValues("studentId");
+                String studentEmail = form.getValues("studentEmail");
                 String weekNumberTmp = form.getValues("weekNumber");
                 int weekNumber = Integer.parseInt(weekNumberTmp);
 
-                AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentId", studentId).first().now();
+                AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentEmail", studentEmail).first().now();
                 String token = attendanceTokens.getAttendanceTokenByWeek(weekNumber);
                 message = token;
 
