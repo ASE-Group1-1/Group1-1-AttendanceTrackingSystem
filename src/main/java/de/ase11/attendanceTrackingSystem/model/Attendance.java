@@ -60,7 +60,7 @@ public class Attendance {
         }
 
 
-        AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentId", user.getEmail()).first().now();
+        AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentEmail", user.getEmail()).first().now();
         String token1 = attendance.getAttendanceToken();
         String token2 = attendanceTokens.getAttendanceTokenByWeek(attendance.getWeekId());
         boolean validToken = token1.equals(token2);
