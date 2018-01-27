@@ -1,6 +1,7 @@
 package de.ase11.attendanceTrackingSystem.rest;
 
 import de.ase11.attendanceTrackingSystem.AttendanceLog;
+import de.ase11.attendanceTrackingSystem.model.App;
 import de.ase11.attendanceTrackingSystem.model.Attendance;
 import de.ase11.attendanceTrackingSystem.model.AttendanceTokens;
 
@@ -113,6 +114,26 @@ public class AttendanceApplication extends Application {
             }
         };
 
+
+        Restlet getCurrentWeek = new Restlet() {
+            @Override
+            public void handle(Request request, Response response) {
+                String message;
+
+                App app = new App();
+
+                int week;
+                try {
+                    week = app.getCurrentWeek();
+                    message = Integer.toString(week);
+                } catch (RuntimeException e) {
+                    message = "You are on holiday!";
+                }
+
+                response.setEntity(message, MediaType.TEXT_PLAIN);
+            }
+        };
+
         // Defines routes
         router.attach("/test", test);
         router.attach("/create", createAttendance);
@@ -123,6 +144,7 @@ public class AttendanceApplication extends Application {
         router.attach("/list", AttendanceLogResource.class);
         router.attach("/list/groups/{groupId}", groups);
         router.attach("/list/users/{userId}", users);
+        router.attach("/week", getCurrentWeek);
 
         return router;
     }
