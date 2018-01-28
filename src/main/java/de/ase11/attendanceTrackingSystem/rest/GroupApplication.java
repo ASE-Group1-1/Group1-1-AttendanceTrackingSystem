@@ -7,8 +7,6 @@ import com.googlecode.objectify.ObjectifyService;
 import de.ase11.attendanceTrackingSystem.GroupList;
 import de.ase11.attendanceTrackingSystem.model.AttendanceTokens;
 import de.ase11.attendanceTrackingSystem.model.Group;
-import de.ase11.attendanceTrackingSystem.model.Role;
-import de.ase11.attendanceTrackingSystem.model.RoleType;
 import org.restlet.Application;
 import org.restlet.Request;
 import org.restlet.Response;
@@ -47,11 +45,6 @@ public class GroupApplication extends Application {
             public void handle(Request request, Response response) {
                 String message;
                 GroupList groupList = GroupList.createGroupList();
-
-                Role tutor = new Role(RoleType.valueOf("TUTOR"));
-                Role student = new Role(RoleType.valueOf("STUDENT"));
-
-                ObjectifyService.ofy().save().entities(tutor, student).now();
 
                 if(groupList.isEmpty()) {
                     Group group1 = new Group(1, "Room 1", "Monday 9:00am", "Max");
