@@ -46,6 +46,24 @@
         <url-pattern>/rest/group/*</url-pattern>
     </servlet-mapping>
 
+    <!-- Catch user requests -->
+    <display-name>user servlet</display-name>
+
+    <servlet>
+        <servlet-name>UserRestletServlet</servlet-name>
+        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+        <init-param>
+            <param-name>org.restlet.application</param-name>
+            <param-value>de.ase11.attendanceTrackingSystem.rest.UserApplication</param-value>
+        </init-param>
+    </servlet>
+
+
+    <servlet-mapping>
+        <servlet-name>UserRestletServlet</servlet-name>
+        <url-pattern>/rest/user/*</url-pattern>
+    </servlet-mapping>
+
 <!-- [END restlet_mappings] -->
 
 <!-- [START Objectify] -->
