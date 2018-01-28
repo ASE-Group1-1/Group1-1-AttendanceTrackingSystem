@@ -4,6 +4,7 @@ import com.google.appengine.api.users.User;
 import com.googlecode.objectify.ObjectifyService;
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 import javax.xml.bind.JAXBContext;
 import javax.xml.bind.JAXBException;
@@ -28,7 +29,7 @@ public class Attendance {
     @XmlElement(name = "presented")
     private boolean presented;
     @XmlElement(name = "attendanceToken")
-    private String attendanceToken;
+    @Index private String attendanceToken;
 
     public Attendance() {};
 
@@ -59,13 +60,17 @@ public class Attendance {
             }
         }
 
+        App app = new App ();
+        int currentWeek = app.getCurrentWeek();
 
         AttendanceTokens attendanceTokens = ObjectifyService.ofy().load().type(AttendanceTokens.class).filter("studentEmail", user.getEmail()).first().now();
-        String token1 = attendance.getAttendanceToken();
+        String transmittedToken = attendance.getAttendanceToken();
         String token2 = attendanceTokens.getAttendanceTokenByWeek(attendance.getWeekId());
-        boolean validToken = token1.equals(token2);
+        boolean validToken = transmittedToken.equals(token2);
+        boolean validWeek = currentWeek == attendance.getWeekId();
+        Attendance existingAttendance = ObjectifyService.ofy().load().type(Attendance.class).filter("attendanceToken", transmittedToken).first().now();
 
-        if(current_users_group.getId().equals(attendance.getGroupId()) && validToken) {
+        if(current_users_group.getId().equals(attendance.getGroupId()) && validToken && validWeek && existingAttendance == null) {
             return attendance;
         } else {
             throw new IllegalArgumentException();
