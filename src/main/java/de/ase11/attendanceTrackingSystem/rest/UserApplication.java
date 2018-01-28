@@ -34,14 +34,22 @@ public class UserApplication extends Application {
                 UserService userService = UserServiceFactory.getUserService();
                 User user = userService.getCurrentUser();
 
+                String tmp = (String) request.getAttributes().get("roleType");
+                RoleType roleType = RoleType.valueOf(tmp);
+
+                Role role = ObjectifyService.ofy().load().type(Role.class).filter("roleType", roleType).first().now();
+
+                if(role == null) {
+                    Role tutor = new Role(RoleType.valueOf("TUTOR"));
+                    Role student = new Role(RoleType.valueOf("STUDENT"));
+
+                    ObjectifyService.ofy().save().entities(tutor, student).now();
+                    role = ObjectifyService.ofy().load().type(Role.class).filter("roleType", roleType).first().now();
+                }
+
                 if(hasRole(user)) {
                     message = "This user already has a role!";
                 } else {
-                    String tmp = (String) request.getAttributes().get("roleType");
-                    RoleType roleType = RoleType.valueOf(tmp);
-
-                    Role role = ObjectifyService.ofy().load().type(Role.class).filter("roleType", roleType).first().now();
-
                     boolean result = role.join(user);
 
                     if (result) {
@@ -67,7 +75,11 @@ public class UserApplication extends Application {
                 RoleType roleType = RoleType.valueOf(tmp);
                 Role role = ObjectifyService.ofy().load().type(Role.class).filter("roleType", roleType).first().now();
 
-                message = role.getMembers().toString();
+                if(role == null) {
+                    message = "This role is not existing!";
+                } else {
+                    message = role.getMembers().toString();
+                }
 
                 response.setEntity(message, MediaType.TEXT_PLAIN);
             }
