@@ -67,7 +67,8 @@ public class App {
             }
         }
 
-        return week;
+        // -1 because we start counting weeks with 0
+        return week - 1;
     }
 
     private int getWeek(Date date) {
